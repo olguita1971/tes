@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CarsArriveBot UI</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <!-- Angular -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+
+    <!-- load momentJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+
+    <!-- load angular-moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
+
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+
+    <!-- ui.bootstrap -->
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
+
+    <!-- angular-toggle-switch -->
+    <!--<script src="https://raw.githubusercontent.com/JumpLink/angular-toggle-switch/master/angular-toggle-switch.min.js"></script>-->
+    <script src="./js/angular-toggle-switch.min.js"></script>
+    <link rel="stylesheet" href="./css/angular-toggle-switch-bootstrap-3.css">
+
+    <link rel="apple-touch-icon" href="./img/cars_arrive_bot.png">
+
+    <style>
+        .hackyhack {
+            position: relative;
+        }
+        
+        .hackyhack .dropdown-menu {
+            left: auto !important;
+            right: 0px;
+        }
+    </style>
+
+
+    <script>
+        var app = angular.module('app', ['firebase', 'angularMoment', 'ngAnimate', 'ui.bootstrap', 'toggle-switch']);
+        app.controller('ctrl', function($scope, $firebaseObject, $firebaseArray) {
+
+            $scope.obj = $firebaseObject(new Firebase('https://carsarrive-remedios.firebaseio.com/server/'));
+
+            $scope.obj.$bindTo($scope, 'data');
+
+            $scope.isCollapsed = false;
+
+            $scope.toggle = function (){
+
+                            $scope.isCollapsed = !$scope.isCollapsed;
+
+                            } 
+														
+						$scope.orig = {tampa: true, miami: true,  orlando: true,  naples: true,  hollywood: true,  pembrokepines: true};
+						$scope.dest = ['tampa', 'miami', 'fort myers', 'orlando', 'naples', 'hollywood', 'pembrokepines', 'green acres', 'pompano', 'hialeah', 'palm beach', 'fort lauderdale', 'delray', 'margate', 'palmetto bay'];
+
+
+        });
+
+
+        app.controller('Datepicker', function($scope, $filter) {
+			
+            $scope.today = function() {
+                //$scope.data.datepick = $scope.data.date;
+            };
+            //$scope.today();
+
+            $scope.clear = function() {
+                //$scope.orderdate = null;
+            };
+
+            $scope.dateconvert1 = function(date) {
+                var datefilter = $filter('date'),
+                    formattedDate = datefilter($scope.data.pickup, 'MM/dd/yyyy');
+                $scope.data.pickup = formattedDate;
+            }
+            $scope.dateconvert2 = function(date) {
+                var datefilter = $filter('date'),
+                    formattedDate = datefilter($scope.data.deliver, 'MM/dd/yyyy');
+                $scope.data.deliver = formattedDate;
+            }
+
+            // Disable weekend selection
+            $scope.disabled = function(date, mode) {
+                return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+            };
+
+            $scope.toggleMin = function() {
+                $scope.minDate = $scope.minDate ? null : new Date() + 1;
+            };
+            $scope.toggleMin();
+
+            $scope.maxDate = new Date(2020, 5, 22);
+
+            $scope.open = function($event) {
+                $scope.status.opened = true;
+            };
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            $scope.formats = ['MM/dd/yyyy', 'yyyy-MM-dd', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate', 'fullDate'];
+            $scope.format = $scope.formats[0];
+
+            $scope.status = {
+                opened: false
+            };
+
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            var afterTomorrow = new Date();
+            afterTomorrow.setDate(tomorrow.getDate() + 2);
+            $scope.events = [{
+                date: tomorrow,
+                status: 'full'
+            }, {
+                date: afterTomorrow,
+                status: 'partially'
+            }];
+
+            $scope.getDayClass = function(date, mode) {
+                if (mode === 'day') {
+                    var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                    for (var i = 0; i < $scope.events.length; i++) {
+                        var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                        if (dayToCheck === currentDay) {
+                            return $scope.events[i].status;
+                        }
+                    }
+                }
+
+                return '';
+            };
+
+        });
+    </script>
+</head>
+
+<body ng-app="app" ng-controller="ctrl">
+
+    <!--<pre>{{obj|json}}</pre>-->
+    <!--
+    <input type=" ng-model="data.date"/>
+    <input ng-model="data.milage"/>
+    <input type="checkbox" ng-model="data.sleep"/>
+    -->
+    <form name="myform" class="formwrapper" novalidate>
+        <div class="form-group">
+            <div class="col-md-6">
+                <h1>Remedios</h1>
+                <time title="{{ data.timestamp | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}" am-time-ago="data.timestamp"></time> 
+                <!--<p>{{data.timestamp}}</p>-->
+                <br/>
+                <br/>
+                <fieldset ng-disabled="!data.sleep">
+                    <div class="hackyhack">
+                        <div class="input-group" ng-controller="Datepicker">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">Pickup Date</button>
+                            </span>
+                            <input type="text" class="form-control" name="date" placeholder="Date" 
+                              datepicker-popup="{{format}}" ng-model="$parent.data.pickup" is-open="status.opened" 
+                              min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" 
+                              close-text="Close" ng-change="dateconvert1($parent.data.pickup)" ng-disabled="$scope.data.sleep" />
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="open($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div class="hackyhack">
+                        <div class="input-group" ng-controller="Datepicker">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">Deliver Date</button>
+                            </span>
+                            <input type="text" class="form-control" name="date" placeholder="Date" 
+                              datepicker-popup="{{format}}" ng-model="$parent.data.deliver" is-open="status.opened" 
+                              min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" 
+                              close-text="Close" ng-change="dateconvert2($parent.data.deliver)" ng-disabled="$scope.data.sleep" />
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="open($event)">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <br/>
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">Milage Max</button>
+                        </span>
+                        <input type="number" name="milage" placeholder="Milage" class="form-control" ng-model="data.milage" ng-required="true">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-minus" ng-click="data.milage=data.milage-1"></i></button>
+                        </span>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus" ng-click="data.milage=data.milage+1"></i></button>
+                        </span>
+                    </div>
+
+                    <br/>
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">Price Min</button>
+                        </span>
+                        <input type="number" name="price" placeholder="Price" class="form-control" ng-model="data.price" ng-required="true">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-minus" ng-click="data.price=data.price-1"></i></button>
+                        </span>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus" ng-click="data.price=data.price+1"></i></button>
+                        </span>
+                    </div>
+
+                    <br/>
+
+	                    <div ng-show="isCollapsed">
+		                    <div class="well well-lg">{{data.ignore}}</div>
+	                    </div>
+
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button" ng-click="isCollapsed = !isCollapsed;">Ignore ID</button>
+                        </span>
+                        <input name="ignore" placeholder="Ignore" class="form-control" ng-model="ignore" ng-required="true">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus" ng-click="data.ignore=data.ignore+ignore+' ';ignore=''"></i></button>
+                        </span>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-trash" ng-click="data.ignore='';ignore=''"></i></button>
+                        </span>
+                    </div>
+										
+										<br/>
+											
+										<table>
+										<tr><th>Origin:</th><th>Destination:</th></tr>
+										<tr>
+											<td>
+											<label ng-repeat="(loc, enabled) in data.origList">
+												<input type="checkbox" ng-model="data.origList[loc]">
+												{{loc}}
+											</label>
+											</td>
+											<td>
+											<label ng-repeat="(loc, enabled) in data.destList">
+												<input type="checkbox" ng-model="data.destList[loc]">
+												{{loc}}
+											</label>
+											</td>
+										</tr>
+										</table>
+									
+                </fieldset>
+
+                <br/>
+                <br/>
+                <toggle-switch ng-model="data.sleep" knob-label="Status" on-label="Sleep" off-label="Work" class="switch-danger">
+                </toggle-switch>
+
+
+
+            </div>
+        </div>
+
+    </form>
+
+</body>
+
+</html>
