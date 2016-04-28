@@ -218,8 +218,8 @@ page.onLoadFinished = function() {
                     // selects for origin & destination
                     var $orig = $("#asmSelect0");
                     var $dest = $("#asmSelect1");
-                    var miami = "6_10_12";
-                    var florida = "6_10_0";
+                    // var miami = "6_10_12";
+                    // var florida = "6_10_0";
 
                     $orig.val(args.orig).change();
                     $dest.val(args.dest).change();
@@ -279,10 +279,10 @@ page.onLoadFinished = function() {
 																print("Load " + results.get(i).id + " has more than 1 car");
 															}
 														}else{
-															print("Load " + results.get(i).id + " is not in the destinations list (" + results.get(i).destCity + ")");
+															//print("Load " + results.get(i).id + " is not in the destinations list (" + results.get(i).destCity + ")");
 														}
 													}else{
-														print("Load " + results.get(i).id + " is not in the origins list (" + results.get(i).origCity + ")");
+														//print("Load " + results.get(i).id + " is not in the origins list (" + results.get(i).origCity + ")");
 													}
 												}else{
 													print("Load " + results.get(i).id + " is in the ignore list (" + ignoreIds + ")");
@@ -384,8 +384,8 @@ page.onLoadFinished = function() {
 
 
                     if ($continue1.length == 1) {
-                        //$continue1.click();
-                        test$continue1_click();
+                        $continue1.click();
+                        //test$continue1_click();
                     } else {
                         print("WhereToSend Failed");
                         searchAgain();
