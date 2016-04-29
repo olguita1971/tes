@@ -259,8 +259,8 @@ page.onLoadFinished = function() {
                     for (var i = 0; i < $results.length; i++) {
 
 												if(ignoreIds.indexOf(results.get(i).id) < 0){
-													if(origins.indexOf(results.get(i).origCity.toLowerCase())>-1){
-														if(destinations.indexOf(results.get(i).destCity.toLowerCase())>-1){
+													if(origins.indexOf(results.get(i).origCity.split('.').join('').toLowerCase())>-1){
+														if(destinations.indexOf(results.get(i).destCity.split('.').join('').toLowerCase())>-1){
 															if (results.get(i).cars = Number(1)) {
 																if (results.get(i).priceShip >= Number(priceLimit)) {
 																	if (results.get(i).milage <= Number(milageLimit)){
@@ -398,6 +398,10 @@ page.onLoadFinished = function() {
 
             function confirmed() {
                 print("Load Assigned!");
+                var $loadid = $('#content_contain > table > tbody > tr:nth-child(2) > td:nth-child(1) > div');
+                //Load #6122275 Assigned
+                // FINISH THIS
+
                 searchAgain();
             }
 
