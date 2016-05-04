@@ -61,15 +61,8 @@
             $scope.isCollapsed = false;
 
             $scope.toggle = function (){
-
-                            $scope.isCollapsed = !$scope.isCollapsed;
-
+															$scope.isCollapsed = !$scope.isCollapsed;
                             } 
-														
-						$scope.orig = {tampa: true, miami: true,  orlando: true,  naples: true,  hollywood: true,  pembrokepines: true};
-						$scope.dest = ['tampa', 'miami', 'fort myers', 'orlando', 'naples', 'hollywood', 'pembrokepines', 'green acres', 'pompano', 'hialeah', 'palm beach', 'fort lauderdale', 'delray', 'margate', 'palmetto bay'];
-
-
         });
 
 
@@ -215,12 +208,27 @@
                         <span class="input-group-btn">
                           <button class="btn btn-default" type="button">Milage Max</button>
                         </span>
-                        <input type="number" name="milage" placeholder="Milage" class="form-control" ng-model="data.milage" ng-required="true">
+                        <input type="number" name="milage" placeholder="Milage" class="form-control" ng-model="data.milageMax" ng-required="true">
                         <span class="input-group-btn">
-                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-minus" ng-click="data.milage=data.milage-1"></i></button>
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-minus" ng-click="data.milageMax=data.milageMax-1"></i></button>
                         </span>
                         <span class="input-group-btn">
-                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus" ng-click="data.milage=data.milage+1"></i></button>
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus" ng-click="data.milageMax=data.milageMax+1"></i></button>
+                        </span>
+                    </div>
+										
+										<br/>
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">Milage Min</button>
+                        </span>
+                        <input type="number" name="milage" placeholder="Milage" class="form-control" ng-model="data.milageMin" ng-required="true">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-minus" ng-click="data.milageMin=data.milageMin-1"></i></button>
+                        </span>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus" ng-click="data.milageMin=data.milageMin+1"></i></button>
                         </span>
                     </div>
 

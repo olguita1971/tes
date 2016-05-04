@@ -165,7 +165,8 @@ page.onLoadFinished = function() {
                 items = results;
             } // Results
 
-            var milageLimit = args.milage;
+            var milageMax = args.milageMax;
+            var milageMin = args.milageMin;
             var priceLimit = args.price;
             var ignoreIds = args.ignore;
 						
@@ -282,7 +283,7 @@ page.onLoadFinished = function() {
 														if(destinations.indexOf(results.get(i).destCity.split('.').join('').toLowerCase())>-1){
 															if (results.get(i).cars == Number(1)) {
 																if (results.get(i).priceShip >= Number(priceLimit)) {
-																	if (results.get(i).milage <= Number(milageLimit)){
+																	if (results.get(i).milage <= Number(milageMax) && results.get(i).milage >= Number(milageMin)){
 																			found = true;
 																			if (Number(greedy) < results.get(i).priceShip) {
 																					greedy = results.get(i).priceShip;
