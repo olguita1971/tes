@@ -290,22 +290,22 @@ page.onLoadFinished = function() {
 																					I = i;
 																			}
 																	} else {
-																			print("Load " + results.get(i).id + " exceeds milage " + results.get(i).milage);
+																		//print("Load " + results.get(i).id + " exceeds milage " + results.get(i).milage);
 																	}
 																} else {
-																			print("Load " + results.get(i).id + " not meet price " + results.get(i).priceShip);
+																	//print("Load " + results.get(i).id + " not meet price " + results.get(i).priceShip);
 																}
 															} else {
-																print("Load " + results.get(i).id + " has more than 1 car");
+																//print("Load " + results.get(i).id + " has more than 1 car");
 															}
 														}else{
-															print("Load " + results.get(i).id + " is not in the destinations list (" + results.get(i).destCity + ")");
+															//print("Load " + results.get(i).id + " destino " + results.get(i).destCity );
 														}
 													}else{
-														print("Load " + results.get(i).id + " is not in the origins list (" + results.get(i).origCity + ")");
+														//print("Load " + results.get(i).id + " origen " + results.get(i).origCity );
 													}
 												}else{
-													print("Load " + results.get(i).id + " is in the ignore list");
+													//print("Load " + results.get(i).id + " is in the ignore list");
 												}
                     }
 
