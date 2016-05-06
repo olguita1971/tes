@@ -299,10 +299,10 @@ page.onLoadFinished = function() {
 																//print("Load " + results.get(i).id + " has more than 1 car");
 															}
 														}else{
-															print("Load " + results.get(i).id + " " + results.get(i).destCity );
+															print(results.get(i).id + " " +results.get(i).origCity+" "+ results.get(i).destCity );
 														}
 													}else{
-														print("Load " + results.get(i).id + " " + results.get(i).origCity );
+															print(results.get(i).id + " " +results.get(i).origCity+" "+ results.get(i).destCity );
 													}
 												}else{
 													//print("Load " + results.get(i).id + " is in the ignore list");
