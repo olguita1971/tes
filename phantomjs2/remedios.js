@@ -123,8 +123,6 @@ page.onLoadFinished = function() {
 											} // success
 									});
 								}); //$.get
-								
-
             } catch (e) {
                 console.log('Error1: ' + e.message);
                 main();
@@ -233,7 +231,7 @@ page.onLoadFinished = function() {
 
             function doSearch() {
                 try {
-                    print('Searching ...');
+                    //print('Searching ...');
                     var submit = "#frm1 > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(5) > td:nth-child(1) > a:nth-child(1)";
                     // selects for origin & destination
                     var $orig = $("#asmSelect0");
@@ -290,13 +288,13 @@ page.onLoadFinished = function() {
 																					I = i;
 																			}
 																	} else {
-																		//print("Load " + results.get(i).id + " exceeds milage " + results.get(i).milage);
+																		//print(results.get(i).id + " exceeds milage " + results.get(i).milage);
 																	}
 																} else {
-																	//print("Load " + results.get(i).id + " not meet price " + results.get(i).priceShip);
+																	//print(results.get(i).id + " not meet price " + results.get(i).priceShip);
 																}
 															} else {
-																//print("Load " + results.get(i).id + " has more than 1 car");
+																//print(results.get(i).id + " has more than 1 car");
 															}
 														}else{
 															print(results.get(i).id + " " +results.get(i).origCity+" "+ results.get(i).destCity );
@@ -305,7 +303,7 @@ page.onLoadFinished = function() {
 															print(results.get(i).id + " " +results.get(i).origCity+" "+ results.get(i).destCity );
 													}
 												}else{
-													//print("Load " + results.get(i).id + " is in the ignore list");
+													//print(results.get(i).id + " is in the ignore list");
 												}
                     }
 
@@ -425,10 +423,6 @@ page.onLoadFinished = function() {
 
             function confirmed() {
                 print("Load Assigned!");
-                var $loadid = $('#content_contain > table > tbody > tr:nth-child(2) > td:nth-child(1) > div');
-                //Load #6122275 Assigned
-                // FINISH THIS
-
                 searchAgain();
             }
 
