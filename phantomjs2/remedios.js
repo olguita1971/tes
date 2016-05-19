@@ -7,6 +7,7 @@ var sys = require("system"),
 // TODO only select loads with 1 car DONE!
 // TODO minimum on price
 // TODO add selected loads to ignore list DONE!
+// TODO add load needed to avoid over bidding 	DONE!
 
 
 page.open('https://login.carsarrive.com/', function() {
@@ -65,12 +66,12 @@ page.onCallback = function(data) {
 
 page.onLoadFinished = function() {
     //console.log("page.onLoadFinished " + page.url);
-    loads = loads + 1;
+    loads += 1;
 
 
-    if (loads % 50 === 0 || args.sleep) {
+    if (loads % 50 === 0 || args.sleep || args.loads<1) {
         firebasecheck();
-    } else if (args && !args.sleep) {
+    } else {
         page.evaluate(main);
     }
 
@@ -87,6 +88,12 @@ page.onLoadFinished = function() {
 									if(args.localignore!=null){
 										data.ignore +=args.localignore.join(" ")+" ";
 									}
+									if(args.found!=null){
+										data.loads-=args.found;
+										if(data.loads<1){
+											data.sleep=true;
+										}
+									}
 									
 									$.ajax({
 											accept: "application/json",
@@ -99,12 +106,14 @@ page.onLoadFinished = function() {
 											},
 											data: JSON.stringify({
 													"timestamp": (new Date()).toString(),
-													"ignore": data.ignore
+													"ignore": data.ignore,
+													"loads": data.loads,
+													"sleep": data.sleep
 											}),
 											success: function() {
 												try {
 														if (typeof window.callPhantom === 'function') {															
-																var args = window.callPhantom(data);
+																window.callPhantom(data);
 																//alert(args);
 														}
 														//console.log(JSON.stringify(data));
@@ -137,7 +146,6 @@ page.onLoadFinished = function() {
             var args;
             if (typeof window.callPhantom === 'function') {
                 args = window.callPhantom();
-                //alert(args);
             }
 
             function Results(results) {
@@ -167,11 +175,28 @@ page.onLoadFinished = function() {
             var milageMin = args.milageMin;
             var priceLimit = args.price;
             var ignoreIds = args.ignore;
+						var loads = args.loads;
 						
 						if(args.localignore!=null){
 							ignoreIds += args.localignore.join(" ")+" ";
 						}
 						
+						if(args.found!=null){
+							console.log("args.found!=null " + args.found);
+							
+							console.log("args.loads " + args.loads);
+
+							// the loads has been updated locally
+							// do something here
+
+							console.log("args.found-args.loads==0 " + args.found-args.loads==0);
+							if(args.found-args.loads<1){
+								console.log("in ");
+								// were done searching
+								// loop to search page
+                searchAgain();
+							}
+						}
 						var origins = [];
 						for(o in args.origList){
 							if(args.origList[o]){
@@ -324,6 +349,12 @@ page.onLoadFinished = function() {
 														if(args.localignore==null){
 															args.localignore = [];
 														}
+														
+														if(args.found==null){
+															args.found=0;
+														}
+														
+														args.found+=1;
 														args.localignore.push(results.get(I).id);
 														window.callPhantom(args);
 												}												
