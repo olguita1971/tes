@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
 
     <!-- Angular -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
 
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
@@ -29,7 +29,7 @@
 
 
     <!-- ui.bootstrap -->
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
 
     <!-- angular-toggle-switch -->
     <!--<script src="https://raw.githubusercontent.com/JumpLink/angular-toggle-switch/master/angular-toggle-switch.min.js"></script>-->
@@ -149,13 +149,6 @@
 </head>
 
 <body ng-app="app" ng-controller="ctrl">
-
-    <!--<pre>{{obj|json}}</pre>-->
-    <!--
-    <input type=" ng-model="data.date"/>
-    <input ng-model="data.milage"/>
-    <input type="checkbox" ng-model="data.sleep"/>
-    -->
     <form name="myform" class="formwrapper" novalidate>
         <div class="form-group">
             <div class="col-md-6">
@@ -165,6 +158,21 @@
                 <br/>
                 <br/>
                 <fieldset ng-disabled="!data.sleep">
+								
+										<div class="input-group">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">Loads</button>
+                        </span>
+                        <input type="number" name="loads" placeholder="Loads" class="form-control" ng-class="data.loads<1?'alert alert-danger':''" ng-model="data.loads" ng-required="true">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-minus" ng-click="data.loads=data.loads-1"></i></button>
+                        </span>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus" ng-click="data.loads=data.loads+1"></i></button>
+                        </span>
+                    </div>
+
+                    <br/>
                     <div class="hackyhack">
                         <div class="input-group" ng-controller="Datepicker">
                             <span class="input-group-btn">
