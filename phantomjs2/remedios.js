@@ -190,7 +190,7 @@ page.onLoadFinished = function() {
 							// do something here
 
 							console.log("args.found-args.loads==0 " + args.found-args.loads==0);
-							if(args.loads-args.found<1){
+							if(args.found>=args.loads){
 								console.log("in ");
 								// were done searching
 								// loop to search page
