@@ -212,6 +212,9 @@ page.onLoadFinished = function() {
 							}
 						}
 
+            var destFL = args.dest=="6_10_0"?true:false;
+            var origFL = args.orig=="6_10_0"?true:false;
+
 						
             var url = document.location.href.split('?')[0];
             var login = 'https://login.carsarrive.com/';
@@ -303,8 +306,8 @@ page.onLoadFinished = function() {
                     for (var i = 0; i < $results.length; i++) {
 
 												if(ignoreIds.indexOf(results.get(i).id) < 0 ){
-													if(origins.indexOf(results.get(i).origCity.split('.').join('').toLowerCase())>-1){
-														if(destinations.indexOf(results.get(i).destCity.split('.').join('').toLowerCase())>-1){
+													if(!origFL || origins.indexOf(results.get(i).origCity.split('.').join('').toLowerCase())>-1){
+														if(!destFL || destinations.indexOf(results.get(i).destCity.split('.').join('').toLowerCase())>-1){
 															if (results.get(i).cars == Number(1)) {
 																if (results.get(i).priceShip >= Number(priceLimit)) {
 																	if (results.get(i).milage <= Number(milageMax) && results.get(i).milage >= Number(milageMin)){
@@ -314,13 +317,13 @@ page.onLoadFinished = function() {
 																					I = i;
 																			}
 																	} else {
-																		//print(results.get(i).id + " exceeds milage " + results.get(i).milage);
+																		print(results.get(i).id + " exceeds milage " + results.get(i).milage);
 																	}
 																} else {
-																	//print(results.get(i).id + " not meet price " + results.get(i).priceShip);
+																	print(results.get(i).id + " not meet price " + results.get(i).priceShip);
 																}
 															} else {
-																//print(results.get(i).id + " has more than 1 car");
+																print(results.get(i).id + " has more than 1 car");
 															}
 														}else{
 															print(results.get(i).id + " " +results.get(i).origCity+" "+ results.get(i).destCity );
@@ -329,7 +332,7 @@ page.onLoadFinished = function() {
 															print(results.get(i).id + " " +results.get(i).origCity+" "+ results.get(i).destCity );
 													}
 												}else{
-													//print(results.get(i).id + " is in the ignore list");
+													print(results.get(i).id + " is in the ignore list");
 												}
                     }
 

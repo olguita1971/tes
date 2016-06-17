@@ -278,8 +278,20 @@
 										<br/>
 											
 										<table>
-										<tr><th>Origin:</th><th>Destination:</th></tr>
-										<tr>
+										<tr><th>Origin:
+                          <select ng-model="data.orig">
+                            <option value="6_10_12">Miami</option>
+                            <option value="6_10_0">Florida</option>
+                          </select>
+                        </th>
+                        <th>Destination:
+                          <select ng-model="data.dest">
+                            <option value="6_10_12">Miami</option>
+                            <option value="6_10_0">Florida</option>
+                          </select>
+                        </th>
+                    </tr>
+										<tr ng-show="data.orig=='6_10_0'">
 											<td>
 											<label ng-repeat="(loc, enabled) in data.origList">
 												<input type="checkbox" ng-model="data.origList[loc]">
