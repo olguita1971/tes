@@ -173,7 +173,8 @@ page.onLoadFinished = function() {
 
             var milageMax = args.milageMax;
             var milageMin = args.milageMin;
-            var priceLimit = args.price;
+            var priceMin = args.price;
+            var priceMax = args.priceMax;
             var ignoreIds = args.ignore;
 						var loads = args.loads;
 						
@@ -309,8 +310,8 @@ page.onLoadFinished = function() {
 													if(!origFL || origins.indexOf(results.get(i).origCity.split('.').join('').toLowerCase())>-1){
 														if(!destFL || destinations.indexOf(results.get(i).destCity.split('.').join('').toLowerCase())>-1){
 															if (results.get(i).cars == Number(1)) {
-																if (results.get(i).priceShip >= Number(priceLimit)) {
-																	if (results.get(i).milage <= Number(milageMax) && results.get(i).milage >= Number(milageMin)){
+																if (results.get(i).priceShip >= Number(priceMin) && results.get(i).priceShip <= Number(priceMax)) {
+																	if (results.get(i).milage >= Number(milageMin) && results.get(i).milage <= Number(milageMax)){
 																			found = true;
 																			if (Number(greedy) < results.get(i).priceShip) {
 																					greedy = results.get(i).priceShip;
